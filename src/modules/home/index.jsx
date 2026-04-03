@@ -3,7 +3,7 @@ import { createModule } from "../../core/createModule";
 import App from "../../App";
 
 export default createModule({
-  name: "home",
+  name: "Home Page",
 
   menu: {
     label: "Home",

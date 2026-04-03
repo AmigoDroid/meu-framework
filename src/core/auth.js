@@ -1,15 +1,17 @@
-// src/core/auth.js
-
-let currentUser = null;
-
-export function login(user) {
-  currentUser = user;
-}
+import { jwtDecode } from "jwt-decode";
 
 export function getUser() {
-  return currentUser;
+  const token = localStorage.getItem("token");
+
+  if (!token) return null;
+
+  try {
+    return jwtDecode(token);
+  } catch {
+    return null;
+  }
 }
 
 export function logout() {
-  currentUser = null;
+  localStorage.removeItem("token");
 }
