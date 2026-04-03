@@ -8,7 +8,7 @@ export default function App() {
           <p className="page-lead">
             Acompanhe clientes, financeiro e acessos com um visual limpo e rapido.
           </p>
-        </div>
+        </div> 
         <div className="actions">
           <button className="btn primary">Criar atalho</button>
           <button className="btn ghost">Exportar relatorio</button>
