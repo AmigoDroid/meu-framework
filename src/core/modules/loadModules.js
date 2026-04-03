@@ -1,5 +1,5 @@
 export function loadModules() {
-    const modulesFiles = import.meta.glob("../modules/**/index.jsx",{
+    const modulesFiles = import.meta.glob("../../modules/**/index.jsx",{
         eager:true
     });
     const modules = [];
@@ -7,4 +7,4 @@ export function loadModules() {
         modules.push(modulesFiles[path])
     }
     return modules;
-}
+} 

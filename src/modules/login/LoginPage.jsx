@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../core/auth/AuthProvider";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -7,6 +8,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   async function handleLogin(event) {
     event.preventDefault();
@@ -28,7 +30,8 @@ export default function LoginPage() {
       }
 
       const data = await res.json();
-      localStorage.setItem("token", data.token);
+      // Usar o método login do AuthProvider ao invés de localStorage direto
+      login(data.token);
       navigate("/");
     } catch (err) {
       console.error(err);

@@ -6,7 +6,7 @@ export function createApp(){
             if(plugin.install){
                 plugin.install(this);
             }
-        },
+        }, 
         addRoutes(route){
             this.routes.push(route);
         },

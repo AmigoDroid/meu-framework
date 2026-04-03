@@ -1,4 +1,4 @@
-import { createModule } from "../../core/createModule"
+import { createModule } from "../../core/modules/createModule";
 import FtthPage from "./FtthPage"
 
 export default createModule({
@@ -13,7 +13,6 @@ export default createModule({
         {
             path: "/ftth",
             element: <FtthPage />
-
         }
     ]
 })

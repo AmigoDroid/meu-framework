@@ -7,17 +7,24 @@ export function buildRoutes(modules) {
   let routes = [];
 
   modules.forEach((m) => {
-  
+   
     m.routes.forEach((route) => {
       
+      // Rota de erro (*) não deve estar protegida
+      const isErrorRoute = route.path === "*";
+      
       routes.push({
-        path: route.path, element : route.path === "/login"
-    ? route.element :(
-        <ProtectedRoute>
-          {route.element}
-        </ProtectedRoute>
-      )
-  });
+        path: route.path, 
+        element: isErrorRoute
+          ? route.element  // Sem proteção para página de erro
+          : route.path === "/login"
+            ? route.element
+            : (
+              <ProtectedRoute>
+                {route.element}
+              </ProtectedRoute>
+            )
+      });
     });
        });
 

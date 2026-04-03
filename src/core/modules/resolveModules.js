@@ -6,4 +6,4 @@ export async function resolveModules(modulesLoader) {
        modules.push(mod.default);
     }
     return modules;
-}
+} 

@@ -5,4 +5,4 @@ export function resolveTitle(modules){
   //console.log(route);
   
   return  name? name : "GMF DOC";
-}
+} 

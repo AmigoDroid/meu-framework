@@ -1,5 +1,5 @@
 // src/modules/home/index.jsx
-import { createModule } from "../../core/createModule";
+import { createModule } from "../../core/modules/createModule";
 import App from "../../App";
 
 export default createModule({

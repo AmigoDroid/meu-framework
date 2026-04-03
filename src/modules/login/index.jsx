@@ -1,7 +1,8 @@
 // src/modules/login/index.jsx
+import { createModule } from "../../core/modules/createModule";
 import LoginPage from "./LoginPage";
 
-export default {
+export default createModule({
   name: "login",
 
   routes: [
@@ -10,4 +11,4 @@ export default {
       element: <LoginPage />
     }
   ]
-};
+});

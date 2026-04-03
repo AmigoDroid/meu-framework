@@ -1,15 +1,23 @@
 import { useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FrameworkContext } from "./FrameworkProvider";
+import { useAuth } from "./auth/AuthProvider";
 
 export default function Menu({ modules }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const framework = useContext(FrameworkContext);
+  const { user, logout } = useAuth();
 
   const menus = modules
     .filter((m) => m.menu)
     .map((m) => m.menu)
     .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <aside className="sidebar">
@@ -43,6 +51,12 @@ export default function Menu({ modules }) {
       </nav>
 
       <div className="sidebar-footer">
+        {user && (
+          <div className="user-profile" onClick={handleLogout}>
+            <span className="user-icon">👤</span>
+            <span className="user-label">{user.name || user.email || 'Usuário'}</span>
+          </div>
+        )}
         <div className="pill">Pronto para hoje</div>
         <p className="footer-note">
           Atalhos rapidos para navegar entre modulos e manter o fluxo.

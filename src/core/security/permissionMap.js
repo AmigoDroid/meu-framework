@@ -7,4 +7,4 @@ export const permissionMap = {
   "/financeiro/editar": "financeiro.edit",
   "/financeiro/criar": "financeiro.create",
   "/financeiro/deletar": "financeiro.delete"
-};
+}; 

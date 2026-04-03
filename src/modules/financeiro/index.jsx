@@ -1,4 +1,4 @@
-import { createModule } from "../../core/createModule";
+import { createModule } from "../../core/modules/createModule";
 import FinanceiroPage from "./FinanceiroPage";
 
  export default createModule({
