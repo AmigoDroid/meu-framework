@@ -329,7 +329,7 @@ Use essas variáveis no seu CSS:
 - Documente suas APIs
 - Escreva testes para módulos críticos
 
-## � Documentação
+## 📝 Documentação
 
 - **[Guia de Temas](THEMES-GUIDE.md)**: Como criar temas personalizados para clientes
 - **API Reference**: Documentação completa da API (em breve)

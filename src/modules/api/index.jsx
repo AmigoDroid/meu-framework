@@ -2,7 +2,7 @@ import { createModule } from "../../core/modules/createModule";
 import ApiPage from "./ApiPage";
 
 export default createModule({
-    name:"api",
+    name:"Gerenciador de API",
     menu:{
         label:"API",
         icon:"🔌",
