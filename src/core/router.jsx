@@ -1,6 +1,7 @@
 // src/core/router.js
 import { useRoutes } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
+import { pluginSystem } from "./plugin/pluginSystem";
 
 export function buildRoutes(modules) {
 
@@ -27,6 +28,24 @@ export function buildRoutes(modules) {
       });
     });
        });
+
+  // Adicionar rotas dos plugins
+  pluginSystem.getRoutes().forEach((route) => {
+    const isErrorRoute = route.path === "*";
+    
+    routes.push({
+      path: route.path, 
+      element: isErrorRoute
+        ? route.element  // Sem proteção para página de erro
+        : route.path === "/login"
+          ? route.element
+          : (
+            <ProtectedRoute>
+              {route.element}
+            </ProtectedRoute>
+          )
+    });
+  });
 
   return useRoutes(routes);
 }

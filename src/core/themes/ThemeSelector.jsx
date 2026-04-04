@@ -9,7 +9,11 @@ export default function ThemeSelector({ isOpen, onClose }) {
   const availableThemes = framework?.getThemes() || [];
 
   const handleThemeSelect = (themeName) => {
-    framework?.applyTheme(themeName);
+    if (window.themeManager) {
+      window.themeManager.setTheme(themeName);
+    } else {
+      framework?.applyTheme(themeName);
+    }
     onClose();
   };
 

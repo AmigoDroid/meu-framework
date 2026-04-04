@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FrameworkContext } from "./FrameworkProvider";
 import { useAuth } from "./auth/AuthProvider";
+import { pluginSystem } from "./plugin/pluginSystem";
 import "./Menu.css";
 
-const menuSections = [
+const baseMenuSections = [
   {
     title: "GESTÃO",
     items: [
@@ -35,6 +36,7 @@ const menuSections = [
       { label: "Automações", path: "/automacoes", icon: "⚙️" },
       { label: "Relatórios", path: "/relatorios", icon: "📊" },
       { label: "Configurações", path: "/configuracoes", icon: "⚙️" },
+      { label: "Gerenciador de Plugins", path: "/plugin-manager", icon: "🔌" },
        { label: "Themas", path: "/themes", icon: "🎨" },
       { label: "Usuários", path: "/usuarios", icon: "👤" },
       { label: "Logs", path: "/logs", icon: "🧾" }
@@ -43,10 +45,37 @@ const menuSections = [
 ];
 
 export default function Menu() {
+  const [menuSections, setMenuSections] = useState(baseMenuSections);
   const location = useLocation();
   const navigate = useNavigate();
   const framework = useContext(FrameworkContext);
   const { user, logout } = useAuth();
+
+  useEffect(() => {
+    const updateMenus = () => {
+      const sections = JSON.parse(JSON.stringify(baseMenuSections)); // deep copy
+      const pluginMenus = pluginSystem.getMenus();
+      console.log('Plugin menus:', pluginMenus);
+      pluginMenus.forEach(menu => {
+        const section = sections.find(s => s.title === menu.section);
+        if (section) {
+          // Verificar se já existe
+          if (!section.items.find(item => item.path === menu.path)) {
+            section.items.push({
+              label: menu.label,
+              path: menu.path,
+              icon: menu.icon
+            });
+          }
+        }
+      });
+      setMenuSections(sections);
+    };
+
+    updateMenus();
+    const interval = setInterval(updateMenus, 1000); // verificar a cada segundo
+    return () => clearInterval(interval);
+  }, []);
 
   const handleLogout = () => {
     logout();
