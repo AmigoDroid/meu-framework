@@ -1,3 +1,6 @@
+import { useEffect,useContext, useState } from "react";
+import { FrameworkContext } from "../../core/FrameworkProvider";
+
 const highlights = [
   { label: "Novos leads", value: "32", note: "Esta semana" },
   { label: "Implantacoes", value: "12 em andamento", note: "3 atrasadas" },
@@ -5,6 +8,19 @@ const highlights = [
 ];
 
 export default function ClientesPage() {
+  const {request} = useContext(FrameworkContext);
+  const [user,setUser] = useState("");
+  
+  useEffect(() => {
+  request("get","/1",{method:"POST"}).then(setUser);
+}, []);
+
+useEffect(()=>{
+console.log(user);
+
+},[user])
+
+
   return (
     <div className="page">
       <div className="page-header">

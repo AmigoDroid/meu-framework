@@ -1,7 +1,14 @@
 import { getUser } from "../auth/auth.js";
+import { getConfig } from "../config";
 import { permissionMap } from "./permissionMap";
 
 export function canAccess(path, user = null) {
+  // Se a segurança está desativada, permite todos os acessos
+  const config = getConfig();
+  if (!config.security?.enablePermissions && !config.security?.enableRoles) {
+    return true;
+  }
+
   // Se não passou usuário, pega do localStorage
   const currentUser = user || getUser();
 

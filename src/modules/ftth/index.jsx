@@ -2,11 +2,11 @@ import { createModule } from "../../core/modules/createModule";
 import FtthPage from "./FtthPage"
 
 export default createModule({
-    name: "Ftth Module",
+    name: "Visão da Rede",
     menu: {
-        label: "FTTH",
-        path: "/ftth",
-        icon: "⚡",
+        label: "Visão da Rede",
+        path: "/visao-da-rede",
+        icon: "🌐",
         order: 4
     },
     routes:[

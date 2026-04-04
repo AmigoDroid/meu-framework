@@ -1,0 +1,93 @@
+{
+  "dashboard": {
+    "resumo": {
+      "clientes_total": 1280,
+      "clientes_online": 1198,
+      "clientes_offline": 82,
+      "pon_ativas": 16,
+      "alertas_ativos": 5,
+      "uptime_rede": "99.2%"
+    },
+
+    "rede": {
+      "olt": {
+        "id": "OLT-01",
+        "nome": "OLT Central",
+        "fabricante": "Huawei",
+        "ip": "192.168.1.1",
+        "pons": [
+          {
+            "id": "PON-01",
+            "status": "ativo",
+            "clientes_total": 64,
+            "clientes_online": 60,
+            "potencia_media": "-18.5 dBm"
+          }
+        ]
+      },
+
+      "topologia": [
+        {
+          "tipo": "CTO",
+          "id": "CTO-003",
+          "nome": "Vila Nova",
+          "lat": -5.12,
+          "lng": -44.32,
+          "splitters": [
+            {
+              "id": "SPL-012",
+              "tipo": "1:16",
+              "portas_usadas": 16,
+              "portas_total": 16,
+              "potencia": "-18.5 dBm",
+              "status": "ok"
+            }
+          ]
+        }
+      ]
+    },
+
+    "onus": [
+      {
+        "id": "ONU-001234",
+        "cliente": "João Silva",
+        "status": "online",
+        "potencia_rx": "-19.2 dBm",
+        "potencia_tx": "2.1 dBm",
+        "cto": "CTO-003",
+        "sinal_qualidade": "bom"
+      },
+      {
+        "id": "ONU-008",
+        "cliente": "Ana Oliveira",
+        "status": "alerta",
+        "potencia_rx": "-26.5 dBm",
+        "potencia_tx": "1.2 dBm",
+        "cto": "CTO-003",
+        "alerta": "Atenuação alta"
+      }
+    ],
+
+    "alertas": [
+      {
+        "id": "ALERT-01",
+        "tipo": "potencia_baixa",
+        "descricao": "ONU com sinal crítico",
+        "gravidade": "alta",
+        "referencia": "ONU-008",
+        "timestamp": "2026-04-04T14:30:00"
+      }
+    ],
+
+    "ordens_servico": [
+      {
+        "id": "OS-2024-004",
+        "cliente": "Pedro Costa",
+        "local": "CTO-001",
+        "status": "agendado",
+        "data": "2026-04-05",
+        "descricao": "Verificação de sinal"
+      }
+    ]
+  }
+}

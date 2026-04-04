@@ -1,8 +1,8 @@
 // src/core/config.js
 export const defaultConfig = {
-  name: 'GMF - GEO',
-  version: '1.0.0',
-  description: 'Um framework React personalizado.',
+  name: 'GMF ',
+  version: '2.3.1',
+  description: 'Sistema FTTH para gerenciamento de rede.',
   theme: {
     primary: '#10b981',
     secondary: '#22d3ee',
@@ -15,12 +15,12 @@ export const defaultConfig = {
     homeRoute: '/'
   },
   modules: {
-    autoLoad: true,
-    hotReload: false
+    autoLoad: true, //carrega automaticamente os módulos encontrados na pasta src/modules
+    hotReload: false //recarrega os módulos automaticamente ao detectar mudanças (recomendo deixar false durante o desenvolvimento para evitar recarregamentos excessivos)
   },
   security: {
-    enablePermissions: true,
-    enableRoles: true
+    enablePermissions: false,//deixe true para ativar o sistema de permissões baseado em rotas
+    enableRoles: false //deixe true para ativar o sistema de controle de acesso baseado em papéis (roles)
   }
 };
 

@@ -1,62 +1,76 @@
-import { createContext, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import { getConfig } from "./config";
-import { themeManager, registerTheme } from "./themes/themeManager";
+import { themeManager } from "./themes/themeManager";
 
-// Importar temas padrão
+// temas
 import defaultTheme from "./themes/default.js";
 import techCorpTheme from "./themes/tech-corp.js";
 import financeProTheme from "./themes/finance-pro.js";
 import creativeStudioTheme from "./themes/creative-studio.js";
+//api
+import { apiManager } from "./api/apiManager.js";
+import "./api/endpoints.js"
+
 
 export const FrameworkContext = createContext();
 
 export function FrameworkProvider({ children, config = {} }) {
-  // Mesclar configuração padrão com configuração passada
+
   const frameworkConfig = { ...getConfig(), ...config };
 
-  // Inicializar temas
-  useEffect(() => {
-    // Registrar temas padrão
-    registerTheme(defaultTheme.name, defaultTheme);
-    registerTheme(techCorpTheme.name, techCorpTheme);
-    registerTheme(financeProTheme.name, financeProTheme);
-    registerTheme(creativeStudioTheme.name, creativeStudioTheme);
+  const [currentTheme, setCurrentTheme] = useState(null);
 
-    // Carregar e registrar temas customizados do localStorage
+  useEffect(() => {
+
+    // registrar temas
+    [
+      defaultTheme,
+      techCorpTheme,
+      financeProTheme,
+      creativeStudioTheme
+    ].forEach(t => themeManager.registerTheme(t.name, t));
+
+    // carregar custom
     try {
       const customThemes = JSON.parse(localStorage.getItem('gmf-custom-themes') || '{}');
+
       Object.entries(customThemes).forEach(([name, themeConfig]) => {
-        registerTheme(name, themeConfig);
-        console.log(`🎨 Tema customizado carregado: ${name}`);
+        themeManager.registerTheme(name, themeConfig);
       });
-    } catch (error) {
-      console.warn('Erro ao carregar temas customizados:', error);
-    }
 
-    // Aplicar tema salvo ou padrão
-    themeManager.loadSavedTheme();
+    } catch {}
 
-    // Salvar tema quando mudar
-    const handleThemeChange = () => {
+    // aplicar tema inicial
+    const theme = themeManager.loadSavedTheme();
+    setCurrentTheme(theme);
+
+    // listener interno
+    const unsubscribe = themeManager.onChange((newTheme) => {
+      setCurrentTheme(newTheme);
       themeManager.saveCurrentTheme();
-    };
+    });
 
-    window.addEventListener('theme:changed', handleThemeChange);
-    return () => window.removeEventListener('theme:changed', handleThemeChange);
+    return () => unsubscribe();
+
   }, []);
 
   const value = {
     ...frameworkConfig,
-    // Métodos utilitários
+
     getVersion: () => frameworkConfig.version,
     getName: () => frameworkConfig.name,
     isDevelopment: () => import.meta.env.DEV,
-    // Sistema de temas
-    themeManager,
-    applyTheme: (themeName) => themeManager.applyTheme(themeName),
+
+    currentTheme,
+    applyTheme: (name) => themeManager.applyTheme(name),
     registerTheme: (name, config) => themeManager.registerTheme(name, config),
-    getCurrentTheme: () => themeManager.getCurrentTheme(),
-    getAvailableThemes: () => themeManager.getAvailableThemes()
+    getThemes: () => themeManager.getAvailableThemes(),
+    //api
+    request: (name, pathOrData, maybeData) => apiManager.request(name, pathOrData, maybeData),
+    onRequest: (cb) => apiManager.on("request", cb),
+    onResponse: (cb) => apiManager.on("response", cb),
+    onError: (cb) => apiManager.on("error", cb),
+    registerEndpoint: (name, config) => apiManager.register(name, config)
   };
 
   return (

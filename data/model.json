@@ -1,0 +1,213 @@
+{
+  "models": [
+    {
+      "name": "Olts",
+      "table": "olts",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "nome": { "type": "STRING" },
+        "fabricante": { "type": "STRING" },
+        "modelo": { "type": "STRING" },
+        "ip": { "type": "STRING" },
+        "porta_gerencia": { "type": "INTEGER" },
+        "usuario": { "type": "STRING" },
+        "senha": { "type": "TEXT" },
+        "created_at": { "type": "DATE" }
+      }
+    },
+    {
+      "name": "Pons",
+      "table": "pons",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "olt_id": { "type": "INTEGER", "references": "Olts" },
+        "slot": { "type": "INTEGER" },
+        "porta": { "type": "INTEGER" },
+        "status": { "type": "STRING" },
+        "capacidade_max": { "type": "INTEGER" },
+        "created_at": { "type": "DATE" }
+      }
+    },
+    {
+      "name": "Splitters",
+      "table": "splitters",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "pon_id": { "type": "INTEGER", "references": "Pons" },
+        "tipo": { "type": "STRING" },
+        "nivel": { "type": "INTEGER" },
+        "potencia_entrada": { "type": "FLOAT" },
+        "created_at": { "type": "DATE" }
+      }
+    },
+    {
+      "name": "Ctos",
+      "table": "ctos",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "nome": { "type": "STRING" },
+        "latitude": { "type": "FLOAT" },
+        "longitude": { "type": "FLOAT" },
+        "capacidade": { "type": "INTEGER" },
+        "splitter_id": { "type": "INTEGER", "references": "Splitters" },
+        "created_at": { "type": "DATE" }
+      }
+    },
+    {
+      "name": "Fibras",
+      "table": "fibras",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "origem_tipo": { "type": "STRING" },
+        "origem_id": { "type": "INTEGER" },
+        "destino_tipo": { "type": "STRING" },
+        "destino_id": { "type": "INTEGER" },
+        "distancia_metros": { "type": "INTEGER" },
+        "status": { "type": "STRING" }
+      }
+    },
+    {
+      "name": "Onus",
+      "table": "onus",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "serial": { "type": "STRING", "unique": true },
+        "modelo": { "type": "STRING" },
+        "fabricante": { "type": "STRING" },
+        "pon_id": { "type": "INTEGER", "references": "Pons" },
+        "cto_id": { "type": "INTEGER", "references": "Ctos" },
+        "cliente_id": { "type": "INTEGER", "references": "Clientes" },
+        "status": { "type": "STRING" },
+        "distancia": { "type": "INTEGER" },
+        "created_at": { "type": "DATE" }
+      }
+    },
+    {
+      "name": "Clientes",
+      "table": "clientes",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "nome": { "type": "STRING" },
+        "cpf_cnpj": { "type": "STRING" },
+        "telefone": { "type": "STRING" },
+        "email": { "type": "STRING" },
+        "endereco": { "type": "TEXT" },
+        "latitude": { "type": "FLOAT" },
+        "longitude": { "type": "FLOAT" },
+        "status": { "type": "STRING" },
+        "created_at": { "type": "DATE" }
+      }
+    },
+    {
+      "name": "Planos",
+      "table": "planos",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "nome": { "type": "STRING" },
+        "velocidade_down": { "type": "INTEGER" },
+        "velocidade_up": { "type": "INTEGER" },
+        "valor": { "type": "FLOAT" }
+      }
+    },
+    {
+      "name": "Contratos",
+      "table": "contratos",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "cliente_id": { "type": "INTEGER", "references": "Clientes" },
+        "plano_id": { "type": "INTEGER", "references": "Planos" },
+        "login_pppoe": { "type": "STRING" },
+        "senha_pppoe": { "type": "STRING" },
+        "status": { "type": "STRING" },
+        "data_ativacao": { "type": "DATE" }
+      }
+    },
+    {
+      "name": "OnuStatusLogs",
+      "table": "onu_status_logs",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "onu_id": { "type": "INTEGER", "references": "Onus" },
+        "status": { "type": "STRING" },
+        "potencia_rx": { "type": "FLOAT" },
+        "potencia_tx": { "type": "FLOAT" },
+        "temperatura": { "type": "FLOAT" },
+        "uptime": { "type": "INTEGER" },
+        "created_at": { "type": "DATE" }
+      }
+    },
+    {
+      "name": "Alertas",
+      "table": "alertas",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "tipo": { "type": "STRING" },
+        "descricao": { "type": "TEXT" },
+        "severidade": { "type": "STRING" },
+        "referencia_tipo": { "type": "STRING" },
+        "referencia_id": { "type": "INTEGER" },
+        "resolvido": { "type": "BOOLEAN" },
+        "created_at": { "type": "DATE" }
+      }
+    },
+    {
+      "name": "Faturas",
+      "table": "faturas",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "cliente_id": { "type": "INTEGER", "references": "Clientes" },
+        "valor": { "type": "FLOAT" },
+        "vencimento": { "type": "DATE" },
+        "status": { "type": "STRING" },
+        "created_at": { "type": "DATE" }
+      }
+    },
+    {
+      "name": "Pagamentos",
+      "table": "pagamentos",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "fatura_id": { "type": "INTEGER", "references": "Faturas" },
+        "valor": { "type": "FLOAT" },
+        "data_pagamento": { "type": "DATE" },
+        "metodo": { "type": "STRING" }
+      }
+    },
+    {
+      "name": "OrdensServico",
+      "table": "ordens_servico",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "cliente_id": { "type": "INTEGER", "references": "Clientes" },
+        "tipo": { "type": "STRING" },
+        "status": { "type": "STRING" },
+        "descricao": { "type": "TEXT" },
+        "tecnico_id": { "type": "INTEGER" },
+        "data_agendada": { "type": "DATE" },
+        "data_execucao": { "type": "DATE" }
+      }
+    },
+    {
+      "name": "OsChecklist",
+      "table": "os_checklist",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "os_id": { "type": "INTEGER", "references": "OrdensServico" },
+        "potencia_rx": { "type": "FLOAT" },
+        "foto_url": { "type": "TEXT" },
+        "observacoes": { "type": "TEXT" }
+      }
+    },
+    {
+      "name": "Usuarios",
+      "table": "usuarios",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "nome": { "type": "STRING" },
+        "email": { "type": "STRING" },
+        "senha": { "type": "TEXT" },
+        "role": { "type": "STRING" }
+      }
+    }
+  ]
+}

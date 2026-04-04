@@ -2,65 +2,89 @@ import { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FrameworkContext } from "./FrameworkProvider";
 import { useAuth } from "./auth/AuthProvider";
+import "./Menu.css";
 
-export default function Menu({ modules }) {
+const menuSections = [
+  {
+    title: "GESTÃO",
+    items: [
+      { label: "Dashboard", path: "/", icon: "🏠" },
+      { label: "Clientes (CRM)", path: "/clientes", icon: "👥" },
+      { label: "Financeiro", path: "/financeiro", icon: "💰" },
+      { label: "Ordens de Serviço", path: "/ordens-de-servico", icon: "🧾" },
+      { label: "Estoque", path: "/estoque", icon: "📦" },
+      { label: "Planos", path: "/planos", icon: "📝" }
+    ]
+  },
+  {
+    title: "REDE",
+    items: [
+      { label: "Visão da Rede", path: "/visao-da-rede", icon: "🌐" },
+      { label: "OLTs", path: "/olts", icon: "📡" },
+      { label: "CTOs", path: "/ctos", icon: "🏢" },
+      { label: "Splitters", path: "/splitters", icon: "🧩" },
+      { label: "Fibra", path: "/fibra", icon: "🪄" },
+      { label: "ONUs", path: "/onus", icon: "🔌" },
+      { label: "Monitoramento", path: "/monitoramento", icon: "📈" },
+      { label: "Alarmes", path: "/alarmes", icon: "🚨" }
+    ]
+  },
+  {
+    title: "SISTEMA",
+    items: [
+      { label: "Automações", path: "/automacoes", icon: "⚙️" },
+      { label: "Relatórios", path: "/relatorios", icon: "📊" },
+      { label: "Configurações", path: "/configuracoes", icon: "⚙️" },
+       { label: "Themas", path: "/themes", icon: "🎨" },
+      { label: "Usuários", path: "/usuarios", icon: "👤" },
+      { label: "Logs", path: "/logs", icon: "🧾" }
+    ]
+  }
+];
+
+export default function Menu() {
   const location = useLocation();
   const navigate = useNavigate();
   const framework = useContext(FrameworkContext);
   const { user, logout } = useAuth();
-
-  const menus = modules
-    .filter((m) => m.menu)
-    .map((m) => m.menu)
-    .sort((a, b) => (a.order || 0) - (b.order || 0));
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
 
+  const isActive = (path) =>
+    location.pathname === path ||
+    (path !== "/" && location.pathname.startsWith(path));
+
   return (
     <aside className="sidebar">
-      <div className="logo">
-        <div className="logo-badge">GM</div>
-        <div className="logo-text">
-          <h3>{framework?.name || "Framework"}</h3>
-          <span>{framework?.version ? `v${framework.version}` : "Console"}</span>
+      <div className="sidebar-brand">
+        <div className="brand-icon">FL</div>
+        <div className="brand-text">
+          <strong>FiberLink</strong>
+          <span>Sistema FTTH</span>
         </div>
       </div>
 
-      <nav className="menu-group">
-        {menus.map((menu) => {
-          const active =
-            location.pathname === menu.path ||
-            (menu.path !== "/" && location.pathname.startsWith(menu.path));
-
-          return (
-            <Link
-              key={menu.path}
-              to={menu.path}
-              className={`menu-link${active ? " active" : ""}`}
-            >
-              <span className="menu-icon" aria-hidden="true">
-                {menu.icon || "•"}
-              </span>
-              <span className="menu-label">{menu.label}</span>
-            </Link>
-          );
-        })}
-      </nav>
-
-      <div className="sidebar-footer">
-        {user && (
-          <div className="user-profile" onClick={handleLogout}>
-            <span className="user-icon">👤</span>
-            <span className="user-label">{user.name || user.email || 'Usuário'}</span>
+      <div className="menu-sections">
+        {menuSections.map((section) => (
+          <div key={section.title} className="menu-section">
+            <div className="menu-section-title">{section.title}</div>
+            <nav className="menu-items">
+              {section.items.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`menu-item${isActive(item.path) ? " active" : ""}`}
+                >
+                  <span className="menu-item-icon">{item.icon}</span>
+                  <span className="menu-item-label">{item.label}</span>
+                </Link>
+              ))}
+            </nav>
           </div>
-        )}
-        <div className="pill">Pronto para hoje</div>
-        <p className="footer-note">
-          Atalhos rapidos para navegar entre modulos e manter o fluxo.
-        </p>
+        ))}
       </div>
     </aside>
   );

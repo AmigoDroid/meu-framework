@@ -1,0 +1,217 @@
+.network-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  border-radius: 28px;
+  background: rgba(12, 18, 34, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.network-card.loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.network-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.section-eyebrow {
+  margin: 0;
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.network-title {
+  margin: 6px 0 0;
+  font-size: 22px;
+}
+
+.network-header-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.network-top-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.network-search-box {
+  flex: 1 1 320px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.network-search-box span {
+  font-size: 16px;
+}
+
+.network-search-box input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+}
+
+.network-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.network-status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.network-status-pill.alarm {
+  color: #fbbf24;
+}
+
+.network-status-pill.break {
+  color: #f87171;
+}
+
+.network-map {
+  position: relative;
+  min-height: 420px;
+  border-radius: 28px;
+  background: radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.12), transparent 32%),
+    radial-gradient(circle at 82% 10%, rgba(34, 211, 238, 0.12), transparent 30%),
+    linear-gradient(180deg, rgba(10, 13, 24, 0.95), rgba(8, 11, 22, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.network-map::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 15%),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 80px 80px;
+}
+
+.map-line {
+  position: absolute;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+}
+
+.map-line-1 {
+  top: 26%;
+  left: 12%;
+  width: 76%;
+}
+
+.map-line-2 {
+  top: 42%;
+  left: 18%;
+  width: 62%;
+}
+
+.map-line-3 {
+  top: 58%;
+  left: 26%;
+  width: 50%;
+}
+
+.map-node {
+  position: absolute;
+  min-width: 160px;
+  padding: 16px 16px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(6, 12, 28, 0.9);
+  backdrop-filter: blur(8px);
+  color: var(--text);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.32);
+}
+
+.map-node strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.map-node small {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.map-node span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+.map-node-online {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.map-node-alarme {
+  border-color: rgba(249, 115, 22, 0.5);
+}
+
+.network-footer-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.network-stat-block {
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.network-stat-label {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin-bottom: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.network-stat-block strong {
+  font-size: 16px;
+}
+
+@media (max-width: 960px) {
+  .network-top-controls,
+  .network-header-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

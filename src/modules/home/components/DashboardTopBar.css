@@ -1,0 +1,40 @@
+.dashboard-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 16px 0;
+}
+
+.dashboard-topbar .dashboard-eyebrow {
+  margin: 0 0 8px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 11px;
+}
+
+.dashboard-topbar .dashboard-title {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.05;
+}
+
+.dashboard-topbar .dashboard-subtitle {
+  margin: 10px 0 0;
+  color: var(--text-secondary);
+  max-width: 540px;
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 820px) {
+  .dashboard-topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

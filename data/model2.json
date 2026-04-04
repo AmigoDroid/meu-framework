@@ -1,0 +1,216 @@
+{
+  "models": [
+
+    {
+      "name": "Pops",
+      "table": "pops",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "nome": { "type": "STRING" },
+        "latitude": { "type": "FLOAT" },
+        "longitude": { "type": "FLOAT" },
+        "descricao": { "type": "TEXT" }
+      }
+    },
+
+    {
+      "name": "Racks",
+      "table": "racks",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "pop_id": { "type": "INTEGER", "references": "Pops" },
+        "nome": { "type": "STRING" },
+        "posicao_x": { "type": "FLOAT" },
+        "posicao_y": { "type": "FLOAT" },
+        "posicao_z": { "type": "FLOAT" }
+      }
+    },
+
+    {
+      "name": "Equipamentos",
+      "table": "equipamentos",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "rack_id": { "type": "INTEGER", "references": "Racks" },
+        "nome": { "type": "STRING" },
+        "tipo": { "type": "STRING" },
+        "fabricante": { "type": "STRING" },
+        "modelo": { "type": "STRING" },
+        "u_inicio": { "type": "INTEGER" },
+        "u_fim": { "type": "INTEGER" }
+      }
+    },
+
+    {
+      "name": "PortasEquipamento",
+      "table": "portas_equipamento",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "equipamento_id": { "type": "INTEGER", "references": "Equipamentos" },
+        "nome": { "type": "STRING" },
+        "tipo": { "type": "STRING" },
+        "velocidade": { "type": "INTEGER" },
+        "vlan": { "type": "INTEGER" },
+        "status": { "type": "STRING" }
+      }
+    },
+
+    {
+      "name": "Dios",
+      "table": "dios",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "rack_id": { "type": "INTEGER", "references": "Racks" },
+        "nome": { "type": "STRING" },
+        "capacidade": { "type": "INTEGER" }
+      }
+    },
+
+    {
+      "name": "PortasDio",
+      "table": "portas_dio",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "dio_id": { "type": "INTEGER", "references": "Dios" },
+        "numero": { "type": "INTEGER" },
+        "status": { "type": "STRING" }
+      }
+    },
+
+    {
+      "name": "Cabos",
+      "table": "cabos",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "nome": { "type": "STRING" },
+        "tipo": { "type": "STRING" },
+        "quantidade_fibras": { "type": "INTEGER" },
+        "origem_tipo": { "type": "STRING" },
+        "origem_id": { "type": "INTEGER" },
+        "destino_tipo": { "type": "STRING" },
+        "destino_id": { "type": "INTEGER" }
+      }
+    },
+
+    {
+      "name": "Fibras",
+      "table": "fibras",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "cabo_id": { "type": "INTEGER", "references": "Cabos" },
+        "numero": { "type": "INTEGER" },
+        "cor": { "type": "STRING" },
+        "status": { "type": "STRING" }
+      }
+    },
+
+    {
+      "name": "Fusoes",
+      "table": "fusoes",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "fibra_a_id": { "type": "INTEGER", "references": "Fibras" },
+        "fibra_b_id": { "type": "INTEGER", "references": "Fibras" },
+        "tipo": { "type": "STRING" },
+        "perda_db": { "type": "FLOAT" }
+      }
+    },
+
+    {
+      "name": "ConexoesDio",
+      "table": "conexoes_dio",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "porta_dio_id": { "type": "INTEGER", "references": "PortasDio" },
+        "fibra_id": { "type": "INTEGER", "references": "Fibras" }
+      }
+    },
+
+    {
+      "name": "Splitters",
+      "table": "splitters",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "tipo": { "type": "STRING" },
+        "nivel": { "type": "STRING" },
+        "localizacao_tipo": { "type": "STRING" },
+        "localizacao_id": { "type": "INTEGER" }
+      }
+    },
+
+    {
+      "name": "PortasSplitter",
+      "table": "portas_splitter",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "splitter_id": { "type": "INTEGER", "references": "Splitters" },
+        "tipo": { "type": "STRING" },
+        "numero": { "type": "INTEGER" }
+      }
+    },
+
+    {
+      "name": "ConexoesSplitter",
+      "table": "conexoes_splitter",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "porta_splitter_id": { "type": "INTEGER", "references": "PortasSplitter" },
+        "fibra_id": { "type": "INTEGER", "references": "Fibras" }
+      }
+    },
+
+    {
+      "name": "Clientes",
+      "table": "clientes",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "nome": { "type": "STRING" },
+        "latitude": { "type": "FLOAT" },
+        "longitude": { "type": "FLOAT" }
+      }
+    },
+
+    {
+      "name": "Onus",
+      "table": "onus",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "cliente_id": { "type": "INTEGER", "references": "Clientes" },
+        "serial": { "type": "STRING" },
+        "status": { "type": "STRING" }
+      }
+    },
+
+    {
+      "name": "ConexaoClienteFibra",
+      "table": "conexao_cliente_fibra",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "onu_id": { "type": "INTEGER", "references": "Onus" },
+        "fibra_id": { "type": "INTEGER", "references": "Fibras" }
+      }
+    },
+
+    {
+      "name": "Vlans",
+      "table": "vlans",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "numero": { "type": "INTEGER" },
+        "descricao": { "type": "STRING" }
+      }
+    },
+
+    {
+      "name": "ConexoesRede",
+      "table": "conexoes_rede",
+      "fields": {
+        "id": { "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        "porta_origem_id": { "type": "INTEGER", "references": "PortasEquipamento" },
+        "porta_destino_id": { "type": "INTEGER", "references": "PortasEquipamento" },
+        "vlan_id": { "type": "INTEGER", "references": "Vlans" }
+      }
+    }
+
+  ]
+}

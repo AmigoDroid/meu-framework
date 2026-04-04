@@ -1,15 +1,20 @@
 import { useLocation, Navigate, Link } from "react-router-dom";
 import { useAuth } from "./auth/AuthProvider";
+import { getConfig } from "./config";
 import { canAccess } from "./security/permissions";
 
 export default function ProtectedRoute({ children }) {
   const { user, isLoading } = useAuth();
   const location = useLocation();
+  
+  // Verifica config uma única vez
+  const config = getConfig();
+  const securityDisabled = !config.security?.enablePermissions && !config.security?.enableRoles;
 
   console.log('🛡️ ProtectedRoute:', {
     path: location.pathname,
     user: user ? 'autenticado' : 'não autenticado',
-    isLoading
+    securityDisabled
   });
 
   if (isLoading) {
@@ -22,6 +27,12 @@ export default function ProtectedRoute({ children }) {
         </div>
       </div>
     );
+  }
+
+  // Se segurança está desativada, permite acesso direto
+  if (securityDisabled) {
+    console.log('🔓 ProtectedRoute: Segurança desativada, permitindo acesso livre');
+    return children;
   }
 
   if (!user) {
