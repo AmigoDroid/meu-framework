@@ -20,7 +20,7 @@ const baseMenuSections = [
   {
     title: "REDE",
     items: [
-      { label: "Visão da Rede", path: "/visao-da-rede", icon: "🌐" },
+      { label: "Visão da Rede", path: "/ftth", icon: "🌐" },
       { label: "OLTs", path: "/olts", icon: "📡" },
       { label: "CTOs", path: "/ctos", icon: "🏢" },
       { label: "Splitters", path: "/splitters", icon: "🧩" },

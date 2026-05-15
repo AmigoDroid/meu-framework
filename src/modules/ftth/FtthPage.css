@@ -1,0 +1,331 @@
+.ftth-workspace {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.75fr) minmax(360px, 1.5fr) minmax(260px, 0.85fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.ftth-panel,
+.ftth-map-surface {
+  min-height: 100%;
+}
+
+.ftth-panel .card-header,
+.ftth-map-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.ftth-panel h2,
+.ftth-map-header h2 {
+  margin: 0 0 4px;
+  font-size: 20px;
+}
+
+.ftth-tool-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.ftth-chip {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.ftth-chip:hover {
+  border-color: rgba(34, 211, 238, 0.45);
+}
+
+.ftth-chip.active {
+  border-color: rgba(34, 211, 238, 0.68);
+  background: linear-gradient(135deg, var(--primary-alpha-10), var(--secondary-alpha-10));
+  color: var(--text-bright);
+}
+
+.ftth-summary-grid,
+.ftth-selected-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ftth-cable-editor {
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  background: var(--panel-strong);
+  padding: 12px;
+  display: grid;
+  gap: 12px;
+}
+
+.ftth-cable-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ftth-cable-editor-header span {
+  color: var(--accent-2);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ftth-color-standard {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.ftth-standard-button {
+  border: 1px solid var(--stroke);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 700;
+  padding: 10px;
+}
+
+.ftth-standard-button.active {
+  border-color: rgba(34, 211, 238, 0.68);
+  background: linear-gradient(135deg, var(--primary-alpha-10), var(--secondary-alpha-10));
+  color: var(--text-bright);
+}
+
+.ftth-loose-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+  gap: 8px;
+}
+
+.ftth-loose-item {
+  border: 1px solid var(--stroke);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.035);
+  padding: 8px;
+  display: grid;
+  gap: 4px;
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+
+.ftth-loose-item.active {
+  border-color: rgba(34, 211, 238, 0.68);
+  background: rgba(34, 211, 238, 0.08);
+}
+
+.ftth-loose-item i {
+  width: 100%;
+  height: 5px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.ftth-loose-item strong {
+  font-size: 12px;
+}
+
+.ftth-loose-item span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.ftth-fiber-selection-preview {
+  display: grid;
+  gap: 8px;
+}
+
+.ftth-fiber-selection-preview span {
+  border: 1px solid var(--stroke);
+  border-left-width: 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 10px;
+}
+
+.ftth-canvas {
+  min-height: 430px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--stroke);
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    rgba(255, 255, 255, 0.025);
+  background-size: 34px 34px;
+}
+
+.ftth-empty-map {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 6px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.ftth-empty-map strong {
+  color: var(--text);
+}
+
+.ftth-node-preview,
+.ftth-edge-preview {
+  position: absolute;
+  border: 1px solid var(--stroke);
+  color: var(--text);
+  background: rgba(3, 7, 18, 0.86);
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  transition: transform 120ms ease, border 160ms ease, background 160ms ease;
+}
+
+.ftth-node-preview {
+  width: 120px;
+  min-height: 70px;
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 4px;
+  text-align: left;
+}
+
+.ftth-node-preview strong {
+  font-size: 12px;
+  color: var(--accent-2);
+}
+
+.ftth-node-preview span {
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ftth-edge-preview {
+  width: 180px;
+  height: 34px;
+  border-radius: 999px;
+  transform: rotate(-14deg);
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.2), rgba(16, 185, 129, 0.18));
+}
+
+.ftth-node-preview:hover,
+.ftth-edge-preview:hover,
+.ftth-node-preview.active,
+.ftth-edge-preview.active {
+  border-color: rgba(34, 211, 238, 0.68);
+  background: rgba(8, 20, 32, 0.94);
+  transform: translateY(-2px);
+}
+
+.ftth-edge-preview:hover,
+.ftth-edge-preview.active {
+  transform: rotate(-14deg) translateY(-2px);
+}
+
+.ftth-node-cto strong {
+  color: #fbbf24;
+}
+
+.ftth-node-splitter strong {
+  color: #c4b5fd;
+}
+
+.ftth-node-cliente strong {
+  color: #86efac;
+}
+
+.ftth-list-block h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.ftth-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ftth-list-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  background: var(--panel-strong);
+  color: var(--text);
+  padding: 12px;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.ftth-list-button small {
+  display: block;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.ftth-list-button.active {
+  border-color: rgba(34, 211, 238, 0.58);
+  background: linear-gradient(135deg, var(--primary-alpha-10), var(--secondary-alpha-10));
+}
+
+.ftth-item-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: 0 0 auto;
+}
+
+.ftth-payload-card {
+  overflow: hidden;
+}
+
+.ftth-payload-preview {
+  margin: 0;
+  max-height: 360px;
+  overflow: auto;
+  border-radius: 12px;
+  border: 1px solid var(--stroke);
+  background: rgba(0, 0, 0, 0.24);
+  color: var(--text);
+  padding: 14px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.btn.danger {
+  border-color: rgba(248, 113, 113, 0.38);
+  color: #fecdd3;
+}
+
+@media (max-width: 1180px) {
+  .ftth-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .ftth-canvas {
+    min-height: 360px;
+  }
+}
