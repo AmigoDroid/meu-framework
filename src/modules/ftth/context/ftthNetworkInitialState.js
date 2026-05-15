@@ -2,6 +2,7 @@ export const ftthElementTypes = {
   pop: "pops",
   dio: "dios",
   cto: "ctos",
+  ceo: "ceos",
   splitter: "splitters",
   cliente: "clientes"
 };
@@ -17,6 +18,7 @@ export const ftthNetworkInitialState = {
     pops: [],
     dios: [],
     ctos: [],
+    ceos: [],
     splitters: [],
     clientes: []
   },

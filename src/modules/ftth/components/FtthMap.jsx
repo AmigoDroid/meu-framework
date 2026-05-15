@@ -6,13 +6,14 @@ import { getCableSelectionColors } from "../services/ftthColorStandards";
 import "./FtthMap.css";
 
 const mapCenter = [-23.5505, -46.6333];
-const nodeTypes = ["pop", "dio", "cto", "splitter", "cliente"];
+const nodeTypes = ["pop", "dio", "cto", "ceo", "splitter", "cliente"];
 const edgeTypes = ["cabo", "fusao", "conexao"];
 
 const nodeLabels = {
   pop: "POP",
   dio: "DIO",
   cto: "CTO",
+  ceo: "CEO",
   splitter: "SPL",
   cliente: "CLI"
 };
@@ -27,9 +28,95 @@ const nodeSummaryKeys = {
   pop: "pops",
   dio: "dios",
   cto: "ctos",
+  ceo: "ceos",
   splitter: "splitters",
   cliente: "clientes"
 };
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function getNodeIconSvg(kind) {
+  switch (kind) {
+    case "pop":
+      return `
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="9" y="13" width="30" height="24" rx="4" />
+          <path d="M14 18h20M14 24h20M14 30h20" />
+          <circle cx="18" cy="24" r="1.8" />
+          <circle cx="24" cy="24" r="1.8" />
+          <circle cx="30" cy="24" r="1.8" />
+          <path d="M24 8v5M18 40v-3M30 40v-3" />
+        </svg>
+      `;
+    case "dio":
+      return `
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="10" y="10" width="28" height="28" rx="3" />
+          <path d="M15 17h18M15 24h18M15 31h18" />
+          <circle cx="17" cy="17" r="1.5" />
+          <circle cx="22" cy="17" r="1.5" />
+          <circle cx="27" cy="17" r="1.5" />
+          <circle cx="32" cy="17" r="1.5" />
+          <path d="M17 24c4 5 10 5 14 0" />
+        </svg>
+      `;
+    case "cto":
+      return `
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="11" y="12" width="26" height="26" rx="6" />
+          <path d="M16 20h16M16 27h16" />
+          <circle cx="18" cy="32" r="1.7" />
+          <circle cx="24" cy="32" r="1.7" />
+          <circle cx="30" cy="32" r="1.7" />
+          <path d="M24 8v4M24 38v4" />
+        </svg>
+      `;
+    case "ceo":
+      return `
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="9" y="15" width="30" height="20" rx="10" />
+          <path d="M14 25h20" />
+          <path d="M17 20c4 6 10 6 14 0" />
+          <path d="M17 30c4-6 10-6 14 0" />
+          <circle cx="24" cy="25" r="2" />
+        </svg>
+      `;
+    case "splitter":
+      return `
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="16" r="5" />
+          <circle cx="14" cy="34" r="4" />
+          <circle cx="24" cy="34" r="4" />
+          <circle cx="34" cy="34" r="4" />
+          <path d="M24 21v6M24 27l-10 3M24 27l10 3" />
+        </svg>
+      `;
+    case "cliente":
+      return `
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M10 24l14-12 14 12" />
+          <path d="M14 22v16h20V22" />
+          <path d="M21 38v-9h6v9" />
+          <circle cx="34" cy="14" r="3" />
+          <path d="M34 8v-3M39 14h3M37.5 10.5l2-2" />
+        </svg>
+      `;
+    default:
+      return `
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="12" y="12" width="24" height="24" rx="5" />
+          <path d="M18 24h12" />
+        </svg>
+      `;
+  }
+}
 
 function getCollection(state, item) {
   return Object.entries(state.nodes).find(([, values]) => values.some((value) => value.id === item.id))?.[0]
@@ -37,16 +124,22 @@ function getCollection(state, item) {
 }
 
 function createNodeIcon(node, isSelected) {
+  const label = nodeLabels[node.kind] || node.kind.toUpperCase();
+  const name = escapeHtml(node.nome);
+
   return L.divIcon({
     className: "",
     html: `
       <div class="ftth-map-node ftth-map-node-${node.kind} ${isSelected ? "active" : ""}">
-        <strong>${nodeLabels[node.kind] || node.kind.toUpperCase()}</strong>
-        <span>${node.nome}</span>
+        <div class="ftth-map-node-icon">${getNodeIconSvg(node.kind)}</div>
+        <div class="ftth-map-node-copy">
+          <strong>${label}</strong>
+          <span>${name}</span>
+        </div>
       </div>
     `,
-    iconSize: [104, 54],
-    iconAnchor: [52, 27]
+    iconSize: isSelected ? [118, 68] : [48, 48],
+    iconAnchor: isSelected ? [59, 34] : [24, 24]
   });
 }
 

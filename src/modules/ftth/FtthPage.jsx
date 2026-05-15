@@ -9,6 +9,7 @@ const nodeActions = [
   { type: "pop", label: "POP" },
   { type: "dio", label: "DIO" },
   { type: "cto", label: "CTO" },
+  { type: "ceo", label: "CEO" },
   { type: "splitter", label: "Splitter" },
   { type: "cliente", label: "Cliente" }
 ];
@@ -183,7 +184,7 @@ export default function FtthPage() {
         <div className="card stat-card">
           <span className="pill">Elementos</span>
           <div className="stat-value">{nodes.length}</div>
-          <p className="stat-label">POP, DIO, CTO, splitter e cliente</p>
+          <p className="stat-label">POP, DIO, CTO, CEO, splitter e cliente</p>
         </div>
         <div className="card stat-card">
           <span className="pill">Conexoes</span>

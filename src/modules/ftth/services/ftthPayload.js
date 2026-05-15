@@ -17,6 +17,7 @@ export function summarizeFtthNetwork(state) {
     pops: state.nodes.pops.length,
     dios: state.nodes.dios.length,
     ctos: state.nodes.ctos.length,
+    ceos: state.nodes.ceos.length,
     splitters: state.nodes.splitters.length,
     clientes: state.nodes.clientes.length,
     cabos: state.edges.cabos.length,
